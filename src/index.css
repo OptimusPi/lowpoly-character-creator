@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --paper: #fdf8ec;
+    --paper-dim: #f2ecd9;
+    --ink: #26241f;
+    --red: #ed1b57;
+    --blue: #2d1aff;
+    --mint: #6adca2;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--ink);
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Unbounded', 'Work Sans', sans-serif;
+  }
+  /* outlined display text */
+  .text-stroke {
+    -webkit-text-stroke: 1px var(--ink);
+    paint-order: stroke;
+    color: transparent;
+  }
+  /* 4-layer offset stack button (paper → red → blue → mint) */
+  .btn-stack {
+    position: relative;
+    transition: transform 150ms var(--ease-out);
+  }
+  .btn-stack::before,
+  .btn-stack::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--ink);
+    z-index: -1;
+    transition: transform 150ms var(--ease-out-back);
+  }
+  .btn-stack::before {
+    background: var(--red);
+    transform: translate(4px, 4px);
+  }
+  .btn-stack::after {
+    background: var(--mint);
+    transform: translate(8px, 8px);
+  }
+  .btn-stack:hover::before {
+    transform: translate(6px, 6px);
+  }
+  .btn-stack:hover::after {
+    transform: translate(12px, 12px);
+  }
+  .btn-stack:active {
+    transform: translate(4px, 4px);
+  }
+  .btn-stack:active::before {
+    transform: translate(2px, 2px);
+  }
+  .btn-stack:active::after {
+    transform: translate(4px, 4px);
+  }
+  /* paper surface: flat, 1px ink border, hard offset shadow */
+  .paper-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    box-shadow: 6px 6px 0 rgba(38, 36, 31, 1);
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--ink);
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: var(--paper-dim);
+  }
+}
